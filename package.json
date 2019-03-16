@@ -1,0 +1,19 @@
+{
+  "name": "online-resources",
+  "version": "1.0.0",
+  "description": "A common platform to access the best online resources",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/shobhit1997/Online-Resources.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shobhit1997/Online-Resources/issues"
+  },
+  "homepage": "https://github.com/shobhit1997/Online-Resources#readme"
+}
