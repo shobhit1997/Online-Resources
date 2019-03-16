@@ -47,24 +47,28 @@ UserSchema.methods.generateAuthToken=function(){
 
 
 
-// UserSchema.pre('save',function(next){
-// var user = this;
-// if(user.isModified('password'))
-// {
-// 	bcrypt.genSalt(10,function(err,salt){
-// 		bcrypt.hash(user.password,salt,function(err,hash){
-// 			user.password=hash;
-// 			next();
-// 		});
-// 	});
-// }
-// else
-// {
-// 	next();
-// }
-// });
+UserSchema.statics.findByToken = function(token){
+	var User =this;
+	var decoded;
 
+	try{
 
+		decoded= jwt.verify(token,process.env.JWT_SECRET);
+
+	}catch(e){
+
+		return new Promise(function(resolve,reject){
+			reject();
+		});
+
+	}
+	// console.log(decoded);
+	return User.findOne({
+		_id : decoded._id,
+		'tokens.token' : token,
+		'tokens.access' : 'auth'
+	});
+};
 
 module.exports=mongoose.model('User',UserSchema);
 
