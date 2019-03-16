@@ -23,6 +23,26 @@ router.route('/')
 			console.log(e);
 		}
 
+	})
+	.get(async function(req,res){
+		var resources=await Resource.find();
+		res.send(resources);
+	})
+	.put(authenticate,async function(req,res){
+		try{
+			var resource=await Resource.findOneAndUpdate({_id:req.body._id,uploadedBy:req.user._id},req.body);
+			if(resource){
+				resource=await Resource.findOne({_id:req.body._id,uploadedBy:req.user._id});
+				resource.save();
+				res.send(resource);
+			}
+			else{
+				res.status(401).send({message:'You are not authorised to update this resource'});
+			}
+		}
+		catch(e){
+			res.status(400).send();
+		}
 	});
 
 router.route('/search')
@@ -35,6 +55,12 @@ router.route('/search')
 			});
 			res.send(data);
 		});
+	});
+
+router.route('/my')
+	.get(authenticate,async function(req,res){
+		var resources=await Resource.find({uploadedBy:req.user._id});
+		res.send(resources);
 	});
 
 
