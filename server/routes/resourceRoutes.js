@@ -43,6 +43,28 @@ router.route('/')
 		catch(e){
 			res.status(400).send();
 		}
+	})
+	.delete(authenticate,async function(req,res){
+		try{
+			var resource=await Resource.findOne({_id:req.body._id,uploadedBy:req.user._id});
+			if(resource){
+				resource.remove(function(err) {
+				if (err) throw err;
+				/* Document unindexing in the background */
+				resource.on('es-removed', function(err, res1) {
+					if (err) console.log(err);
+					/* Docuemnt is unindexed */
+					res.send({message:'deleted'});
+					});
+				});
+			}
+			else{
+				res.status(401).send({message:'You are not authorised to delete this resource'});
+			}
+		}
+		catch(e){
+			res.status(400).send();
+		}
 	});
 
 router.route('/search')
