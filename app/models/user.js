@@ -22,6 +22,9 @@ var UserSchema = new Schema({
 	admission_no:{
 		type:String
 	},
+	admin:{
+		type:Boolean
+	},
 	createdAt: { type: Date, default: Date.now },
 	tokens : [{
 		access : {

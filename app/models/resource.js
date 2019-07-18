@@ -9,6 +9,10 @@ var ResourceSchema = new Schema({
 		type : String,
 		required:true,
 	},
+	title:{
+		type : String,
+		required:true,
+	},
 	description : {
 		type: String,
 		required:true
@@ -20,6 +24,27 @@ var ResourceSchema = new Schema({
 	uploadedBy:{
 		type:Schema.ObjectId,
 		required:true
+	},
+	verified:{
+		type:Number
+	},
+	upvotes:{
+		userid:[Schema.ObjectId],
+		count:Number
+	},
+	downvotes:{
+		userid:[Schema.ObjectId],
+		count:Number
+	},
+	domain:{
+		type:String,
+		required:true
+	},
+	views:{
+		type:Number
+	},
+	image:{
+		type:String
 	},
 	uploadedAt: { type: Date, default: Date.now }
 });

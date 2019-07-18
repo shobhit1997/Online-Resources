@@ -5,6 +5,7 @@ const  app=express();
 const bodyParser=require('body-parser');
 const loginRouter=require('./routes/loginRoutes');
 const resourceRouter=require('./routes/resourceRoutes');
+const uploadRouter=require('./routes/uploadRoutes');
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
@@ -19,4 +20,5 @@ app.use(function(req,res,next){
 
 app.use('/api/user',loginRouter);
 app.use('/api/resource',resourceRouter);
+app.use('/api/upload',uploadRouter);
 module.exports=app;
