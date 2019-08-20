@@ -1,56 +1,56 @@
-const mongoose=require('mongoose');
-const jwt = require('jsonwebtoken');
-const mongoosastic = require('mongoosastic');
-const config=require('../../server/config/config');
-var Schema=mongoose.Schema;
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const mongoosastic = require("mongoosastic");
+const config = require("../../server/config/config");
+var Schema = mongoose.Schema;
 
 var ResourceSchema = new Schema({
-	link : {
-		type : String,
-		required:true,
-	},
-	title:{
-		type : String,
-		required:true,
-	},
-	description : {
+	link: {
 		type: String,
-		required:true
+		required: true
 	},
-	type:{
-		type:String,
-		required:true
+	title: {
+		type: String,
+		required: true
 	},
-	uploadedBy:{
-		type:Schema.ObjectId,
-		required:true
+	description: {
+		type: String,
+		required: true
 	},
-	verified:{
-		type:Number
+	type: {
+		type: String,
+		required: true
 	},
-	upvotes:{
-		userid:[Schema.ObjectId],
-		count:Number
+	uploadedBy: {
+		type: Schema.ObjectId,
+		required: true
 	},
-	downvotes:{
-		userid:[Schema.ObjectId],
-		count:Number
+	verified: {
+		type: Number,
+		default: 0
 	},
-	domain:{
-		type:String,
-		required:true
+	upvotes: {
+		userid: [Schema.ObjectId],
+		count: Number
 	},
-	views:{
-		type:Number
+	downvotes: {
+		userid: [Schema.ObjectId],
+		count: Number
 	},
-	image:{
-		type:String
+	domain: {
+		type: String,
+		required: true
+	},
+	views: {
+		type: Number,
+		default: 0
+	},
+	image: {
+		type: String
 	},
 	uploadedAt: { type: Date, default: Date.now }
 });
 
 ResourceSchema.plugin(mongoosastic);
 
-
-module.exports=mongoose.model('Resource',ResourceSchema);
-
+module.exports = mongoose.model("Resource", ResourceSchema);
