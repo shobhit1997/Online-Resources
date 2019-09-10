@@ -17,7 +17,10 @@ app.use(function(req,res,next){
   
 	next();
 });
-
+app.get("/", function(req, res) {
+	// body...
+	res.send({ message: "Welcome" });
+});
 app.use('/api/user',loginRouter);
 app.use('/api/resource',resourceRouter);
 app.use('/api/upload',uploadRouter);

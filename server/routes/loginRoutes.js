@@ -43,8 +43,8 @@ router.route("/login/infoconnect").post(async function(req, res) {
 	}
 });
 router.route("/login/google").post(async function(req, res) {
-	var data = await googleUtils.getGoogleAccountFromCode(
-		decodeURIComponent(req.body.code)
+	console.log(req.body.code);
+	var data = await googleUtils.getGoogleAccountFromCode(req.body.code
 	);
 	try {
 		var user = await User.findOne({ email: data.email });
