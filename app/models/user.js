@@ -40,7 +40,7 @@ var UserSchema = new Schema({
 UserSchema.methods.toJSON=function(){
 	var user=this;
 	var userObject=user.toObject();
-	return _.pick(userObject,['_id','name','email','admin']);	
+	return _.pick(userObject,['_id','name','email','admin','admission_no']);	
 };
 
 UserSchema.methods.generateAuthToken=function(){

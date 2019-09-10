@@ -62,6 +62,7 @@ router
 			]);
 		} else {
 			resources = await Resource.aggregate([
+				{ $match: { verified: 1 } },
 				{ $sort: { views: -1, verified: 1 } },
 				{ $group: { _id: "$type", posts: { $push: "$$ROOT" } } }
 			]);
@@ -196,9 +197,9 @@ router.route("/my").get(authenticate, async function(req, res) {
 });
 
 router.route("/viewed").get(async function(req, res) {
-	const _id = req.body.id;
+	const _id = req.query.id;
 	try {
-		await Resource.findOneAndUpdate(
+		var resource= await Resource.findOneAndUpdate(
 			{ _id },
 			{
 				$inc: {

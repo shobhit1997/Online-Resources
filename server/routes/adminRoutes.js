@@ -23,7 +23,6 @@ router.route('/:id')
 	.patch(authenticate,async function(req,res){
 		if(req.user.admin){
 			try{
-				req.body.verified=0;
 				var resource=await Resource.findOneAndUpdate({_id:req.params.id},req.body);
 				if(resource){
 					resource=await Resource.findOne({_id:req.body._id});
