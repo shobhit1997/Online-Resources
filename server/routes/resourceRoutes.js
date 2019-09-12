@@ -94,7 +94,7 @@ router
                     type: "resource",
                     id: req.body._id,
                     body: {
-                        doc: req.body
+                        doc: R.omit(['_id'],req.body)
                     }
                 });
                 res.send(resource);
@@ -104,7 +104,7 @@ router
                 });
             }
         } catch (e) {
-        	console.log(e);
+            console.log(e);
             res.status(400).send();
         }
     })
@@ -224,9 +224,12 @@ router.route("/viewed").get(async function(req, res) {
                 type: "resource",
                 id: _id,
                 body: {
-                    "script": "ctx._source.views += params.count",
-                    "params": {
-                        "count": 1
+                    "script": {
+                        "source": "ctx._source.views += params.count",
+                        "lang": "painless",
+                        "params": {
+                            "count": 1
+                        }
                     }
                 }
             });
