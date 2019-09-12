@@ -200,7 +200,7 @@ router.route("/search").get(async function(req, res) {
     let json = response.aggregations.group_by_domain.buckets.map(bucket => {
         return {
             _id: bucket.key,
-            posts: bucket.buckets.hits.hits.map(hit => {_id:hit._id,...hit._source})
+            posts: bucket.buckets.hits.hits.map(hit => {return {_id:hit._id,...hit._source}})
         };
     });
     res.send(R.indexBy(R.prop('_id'), json));
