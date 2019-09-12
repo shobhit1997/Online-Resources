@@ -75,10 +75,10 @@ router
         try {
             req.body.verified = req.user.admin ? 1 : 0;
             if (req.body.link) {
-                if (resource.type != "link") {
-                    resource.link =
+                if (req.body.type != "link") {
+                    req.body.link =
                         "https://online-resources-files.s3.amazonaws.com/" +
-                        resource.link;
+                        req.body.link;
                 }
             }
             var resource = await Resource.findOneAndUpdate({ _id: req.body._id, uploadedBy: req.user._id },
