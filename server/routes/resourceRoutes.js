@@ -31,7 +31,7 @@ router
 				"https://online-resources-images.s3.amazonaws.com/" +
 				resource.image;
 		}
-		if (resource.type != "file") {
+		if (resource.type != "link") {
 			resource.link =
 				"https://online-resources-files.s3.amazonaws.com/" +
 				resource.link;
@@ -56,15 +56,15 @@ router
 		let resources;
 		if (domain) {
 			resources = await Resource.aggregate([
-				{ $match: { domain, verified: 1 } },
+				{ $match: { domain, verified: 0 } },
 				{ $sort: { views: -1 } },
 				{ $group: { _id: "$type", posts: { $push: "$$ROOT" } } }
 			]);
 		} else {
 			resources = await Resource.aggregate([
-				{ $match: { verified: 1 } },
-				{ $sort: { views: -1, verified: 1 } },
-				{ $group: { _id: "$type", posts: { $push: "$$ROOT" } } }
+				{ $match: { verified: 0 } },
+				{ $sort: { views: -1} },
+				{ $group: { _id: "$domain", posts: { $push: "$$ROOT" } } }
 			]);
 		}
 
@@ -207,7 +207,16 @@ router.route("/viewed").get(async function(req, res) {
 				}
 			}
 		);
-		res.send({ message: "successful" });
+		if (resource) {
+			resource = await Resource.findOne({
+				_id
+			});
+			resource.save();
+			res.send({ message: "successful" });
+		} else {
+			res.send({ message: "unsuccessful" });
+		}
+		
 	} catch (error) {
 		console.log(error);
 		res.send({ message: "unsuccessful" });
