@@ -89,7 +89,14 @@ router
                     _id: req.body._id,
                     uploadedBy: req.user._id
                 });
-                resource.save();
+                await client.update({
+                    index: "resources",
+                    type: "resource",
+                    id: req.body._id,
+                    body: {
+                        doc: req.body
+                    }
+                });
                 res.send(resource);
             } else {
                 res.status(401).send({
@@ -194,7 +201,7 @@ router.route("/search").get(async function(req, res) {
             posts: bucket.buckets.hits.hits.map(hit => hit._source)
         };
     });
-    res.send(R.indexBy(R.prop('_id'),json));
+    res.send(R.indexBy(R.prop('_id'), json));
 });
 
 router.route("/my").get(authenticate, async function(req, res) {
@@ -211,10 +218,17 @@ router.route("/viewed").get(async function(req, res) {
             }
         });
         if (resource) {
-            resource = await Resource.findOne({
-                _id
+            await client.update({
+                index: "resources",
+                type: "resource",
+                id: _id,
+                body: {
+                    "script": "ctx._source.views += params.count",
+                    "params": {
+                        "count": 1
+                    }
+                }
             });
-            resource.save();
             res.send({ message: "successful" });
         } else {
             res.send({ message: "unsuccessful" });
