@@ -28,6 +28,7 @@
     "lodash": "^4.17.15",
     "mongoosastic": "^4.5.0",
     "mongoose": "^5.4.19",
+    "ramda": "^0.26.1",
     "request": "^2.88.0"
   }
 }

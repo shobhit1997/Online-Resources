@@ -1,4 +1,5 @@
 const express = require("express");
+const R = require('ramda');
 const User = require("../.././app/models/user");
 const Resource = require("../.././app/models/resource");
 const authenticate = require(".././middleware/authenticate");
@@ -68,7 +69,7 @@ router
 			]);
 		}
 
-		res.send(resources);
+		res.send(R.indexBy(R.prop('_id'),resources));
 	})
 	.put(authenticate, async function(req, res) {
 		try {
