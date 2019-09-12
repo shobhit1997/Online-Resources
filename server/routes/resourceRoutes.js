@@ -180,6 +180,7 @@ router.route("/search").get(async function(req, res) {
                     ]
                 }
             },
+            sort:[{views:"desc"}],
             aggs: {
                 group_by_domain: {
                     terms: {
@@ -197,6 +198,7 @@ router.route("/search").get(async function(req, res) {
     });
 
     let json = response.aggregations.group_by_domain.buckets.map(bucket => {
+    	console.log(bucket);
         return {
             _id: bucket.key,
             posts: bucket.buckets.hits.hits.map(hit => hit._source)
