@@ -22,6 +22,9 @@ var UserSchema = new Schema({
 	admission_no:{
 		type:String
 	},
+	admin:{
+		type:Boolean
+	},
 	createdAt: { type: Date, default: Date.now },
 	tokens : [{
 		access : {
@@ -34,6 +37,11 @@ var UserSchema = new Schema({
 		}
 	}]
 });
+UserSchema.methods.toJSON=function(){
+	var user=this;
+	var userObject=user.toObject();
+	return _.pick(userObject,['_id','name','email','admin','admission_no']);	
+};
 
 UserSchema.methods.generateAuthToken=function(){
 	var user=this;
