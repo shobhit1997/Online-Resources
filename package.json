@@ -22,7 +22,7 @@
     "googleapis": "^38.0.0",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "mongoosastic": "^4.4.1",
     "mongoose": "^5.4.19",
     "request": "^2.88.0"
